@@ -4,7 +4,7 @@ import {
   MenuModule,
   ClipboardModule,
   TextEditorModule,
-  ColumnAutoSizeModule, // Add ColumnAutoSizeModule
+  ColumnAutoSizeModule, 
 } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 
@@ -13,13 +13,12 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 import { ModuleRegistry } from "ag-grid-community";
 
-// Register AG Grid Modules
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   MenuModule,
   ClipboardModule,
   TextEditorModule,
-  ColumnAutoSizeModule, // Register ColumnAutoSizeModule
+  ColumnAutoSizeModule, 
 ]);
 
 const AgGridDemo = () => {
@@ -62,21 +61,19 @@ const AgGridDemo = () => {
       defaultMinWidth: 100,
       columnLimits: [
         {
-          colId: "country", // You can adjust the column ID as needed
+          colId: "country", 
           minWidth: 900,
         },
       ],
     };
   }, []);
 
-  // Open modal to add column
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false);
     setNewColumnName("");
   };
 
-  // Handle adding a new column
   const handleAddColumn = () => {
     if (!newColumnName.trim()) return;
 
@@ -85,13 +82,11 @@ const AgGridDemo = () => {
       { field: newColumnName, headerName: newColumnName, editable: true },
     ]);
 
-    // Add empty values to the rows for the new column
     setRowData(rowData.map((row) => ({ ...row, [newColumnName]: "" })));
 
     closeModal();
   };
 
-  // Handle adding a row
   const handleAddRow = () => {
     const newRow = columnDefs.reduce((acc, col) => {
       acc[col.field] = "";
@@ -100,12 +95,10 @@ const AgGridDemo = () => {
     setRowData([...rowData, newRow]);
   };
 
-  // Auto-size the current column
   const autoSizeThisColumn = (params) => {
     if (columnApi) {
       const currentColumn = params.column;
       columnApi.autoSizeColumns([currentColumn]);
-      // Apply the autoSizeStrategy to the specific column
       if (autoSizeStrategy) {
         columnApi.getAllColumns().forEach((col) => {
           if (col.getColId() === currentColumn.getColId()) {
@@ -116,12 +109,10 @@ const AgGridDemo = () => {
     }
   };
 
-  // Auto-size all columns
   const autoSizeAllColumns = () => {
     if (columnApi) {
       const allColumns = columnApi.getAllColumns();
       columnApi.autoSizeColumns(allColumns);
-      // Apply the autoSizeStrategy for all columns
       if (autoSizeStrategy) {
         columnApi.getAllColumns().forEach((col) => {
           columnApi.autoSizeColumns([col]);
@@ -130,13 +121,12 @@ const AgGridDemo = () => {
     }
   };
 
-  // Handle cell value change
   const onCellValueChanged = useCallback((event) => {
     const updatedData = event.data;
     setRowData((prevRowData) => {
       const updatedRowData = prevRowData.map((row) => {
         if (row === updatedData) {
-          return updatedData; // Update the row data with the new edited value
+          return updatedData; 
         }
         return row;
       });
@@ -144,7 +134,6 @@ const AgGridDemo = () => {
     });
   }, []);
 
-  // Main menu items with custom auto-sizing options
   const getMainMenuItems = useCallback(
     (params) => {
       return [
@@ -163,7 +152,6 @@ const AgGridDemo = () => {
     [columnApi]
   );
 
-  // Context menu items with custom auto-sizing options
   const getContextMenuItems = useCallback(
     (params) => {
       return [
@@ -182,12 +170,10 @@ const AgGridDemo = () => {
     [columnApi]
   );
 
-  // On grid ready callback
   const onGridReady = (params) => {
-    setColumnApi(params.columnApi); // Set the columnApi here
+    setColumnApi(params.columnApi); 
   };
 
-  // Resize columns to fit grid width
   const sizeToFit = useCallback(() => {
     if (gridRef.current && gridRef.current.api) {
       gridRef.current.api.sizeColumnsToFit();
@@ -267,8 +253,8 @@ const AgGridDemo = () => {
           domLayout="autoHeight"
           contextMenuItems={getContextMenuItems}
           getMainMenuItems={getMainMenuItems}
-          onGridReady={onGridReady} // Set gridApi and columnApi
-          onCellValueChanged={onCellValueChanged} // Handle cell value changes
+          onGridReady={onGridReady} 
+          onCellValueChanged={onCellValueChanged} 
         />
       </div>
     </div>
