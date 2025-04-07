@@ -1,10 +1,10 @@
 import React from 'react'
-import HotTableDemo from './tables/HotTableDemo.jsx'
+import AGGridDemo from './tables/AGGridDemo.jsx'
 
 const App = () => {
   return (
     <>
-      <HotTableDemo />
+      <AGGridDemo />
     </>
   )
 }
